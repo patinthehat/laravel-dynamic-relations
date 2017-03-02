@@ -1,12 +1,11 @@
 <?php
 /**
  * @package Permafrost/DynamicRelations
- * @author Patrick Organ <patrick@permafrost-software.com>
- * @version 0.1.0
+ * @author Patrick Organ <trick.developer@gmail.com>
+ * @version 1.1.0
  * @license MIT
- * @desc
-
  */
+ 
 namespace Permafrost\DynamicRelations;
 
 use Illuminate\Database\Eloquent\Model;

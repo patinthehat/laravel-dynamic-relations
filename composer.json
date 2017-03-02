@@ -1,5 +1,5 @@
 {
-    "name": "patinthehat/dynamicRelations",
+    "name": "patinthehat/laravel-dynamic-relations",
     "description": "dynamic relations for Laravel and Lumen",
     "keywords": ["laravel", "lumen", "relationships", "relations", "dynamic"],
     "license": "MIT",
