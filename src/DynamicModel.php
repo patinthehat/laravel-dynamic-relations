@@ -1,8 +1,11 @@
 <?php
 /**
- *
- * @package permafrost/dynamicRelations
+ * @package Permafrost/DynamicRelations
+ * @author Patrick Organ <patrick@permafrost-software.com>
  * @version 0.1.0
+ * @license MIT
+ * @desc
+
  */
 namespace Permafrost\DynamicRelations;
 
@@ -67,6 +70,15 @@ class DynamicModel extends Model
      */
     protected static $dynamicRelationTypeMap  = [];
 
+
+    /**
+     * Name-value pairs that the dynamic relations should be converted to, if any.
+     * For example, use the dynamic relation name languages, but really use 'user_languages':
+     * 'lanuages'=>'user_languages',
+     * @var array
+     */
+    protected static $dynamicRelationNameToRelationMap = [];
+
     /**
      * The names of the relationships that should be treated as dynamic
      * relations.
@@ -115,6 +127,14 @@ class DynamicModel extends Model
       return in_array($name, static::$dynamicRelations);
     }
 
+    protected static function translateDynamicRelationName($name)
+    {
+      if (in_array($name, self::$dynamicRelationNameToRelationMap)) {
+        return self::$dynamicRelationNameToRelationMap[$name];
+      }
+      return $name;
+    }
+
     /**
      * The proxy method used to determine the relationships for dynamic relations.
      * Calls to this with the name of a dynamic relation are equal to calling a
@@ -131,10 +151,16 @@ class DynamicModel extends Model
      */
     protected function dynamicRelationProxy($name, $parameters = [])
     {
+        $originalName = $name;
+        $name = $this->translateDynamicRelationName($name);
+
         if ($this->isDynamicRelation($name)) {
+            //if (isset(static::$dynamicRelationNameToRelationMap[$name]))
+              //$name = static::$dynamicRelationNameToRelationMap[$name];
+
             $model  = static::getDynamicRelationModelName($name);
             $key    = static::getDynamicRelationKey($name);
-            $type   = static::getDynamicRelationType($name);
+            $type   = static::getDynamicRelationType($originalName);
 
             return $this->$type($model, $key);
         }
@@ -146,8 +172,8 @@ class DynamicModel extends Model
             return $this->relations[$key];
         }
 
-        if (method_exists($this, $name)) {
-          return $this->getRelationshipFromMethod($name, false);
+        if (method_exists($this, $originalName)) {
+          return $this->getRelationshipFromMethod($originalName, false);
         }
 
         throw new \RelationNotFoundException("dynamicRelationProxy failed: relation '$name' not found");

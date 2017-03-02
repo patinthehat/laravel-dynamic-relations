@@ -1,7 +1,7 @@
 {
-    "name": "permafrost/dynamicRelations",
+    "name": "patinthehat/dynamicRelations",
     "description": "dynamic relations for Laravel and Lumen",
-    "keywords": ["laravel"],
+    "keywords": ["laravel", "lumen", "relationships", "relations", "dynamic"],
     "license": "MIT",
     "require": {
         "php": ">=5.6.4"
