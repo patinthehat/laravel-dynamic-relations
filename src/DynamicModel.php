@@ -8,6 +8,7 @@
  
 namespace Permafrost\DynamicRelations;
 
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\RelationNotFoundException;
 
@@ -98,7 +99,7 @@ class DynamicModel extends Model
     {
         parent::__construct($attributes);
         if (is_null(static::$dynamicRelationDefaultKey)) {
-            static::$dynamicRelationDefaultKey = snake_case(class_basename(static::class)) . '_id';
+            static::$dynamicRelationDefaultKey = Str::snake(class_basename(static::class)) . '_id';
         }
     }
 
